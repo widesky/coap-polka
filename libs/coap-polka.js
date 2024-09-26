@@ -60,9 +60,9 @@ class CoapPolka extends Router {
 		return this; // chainable
 	}
 
-	listen(port, hostname) {
+	listen(port, hostname, options) {
 		const host = (typeof hostname === 'undefined') ? '127.0.0.1' : hostname;
-		(this.server = coap.createServer()).on('request', this.handler);
+		this.server = coap.createServer(options || {}, this.handler);
 		return new Promise((resolve, reject) => {
 			this.server.listen(port, host, err => err ? reject(err) : resolve());
 		});
