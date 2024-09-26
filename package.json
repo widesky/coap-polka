@@ -27,7 +27,7 @@
   "license": "MIT",
   "homepage": "https://github.com/eFishery/coap-polka#readme",
   "dependencies": {
-    "coap": "git+https://github.com/widesky/node-coap.git#master",
+    "coap": "github:widesky/node-coap#master",
     "matchit": "^1.0.6",
     "parseurl": "^1.3.2"
   },
