@@ -28,7 +28,15 @@ test('coapPolka::internals', async t => {
 
 	t.is(app.server, undefined, 'app.server is `undefined` initially (pre-listen)');
 	await app.listen();
-	t.ok(app.server instanceof coap.createServer, '~> app.server becomes coap server (post-listen)');
+	/*
+	 * `coap.Server`, not `coap.createServer`. Up to node-coap 0.24 the module
+	 * exported `createServer = Server` -- the class itself -- so an instanceof
+	 * check against it happened to work. From 1.x `createServer` is a factory
+	 * function returning `new Server(...)`, and nothing inherits from a
+	 * factory's prototype, so the old assertion is false on any modern coap.
+	 * The class is exported as `coap.Server` by both.
+	 */
+	t.ok(app.server instanceof coap.Server, '~> app.server becomes coap server (post-listen)');
 	app.server.close();
 
 	t.isFunction(app.onError, 'app.onError is a function');
